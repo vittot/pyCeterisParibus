@@ -7,8 +7,8 @@ from shutil import copyfile
 
 from flask import Flask, render_template
 
-from ceteris_paribus.plots import PLOTS_DIR
-from ceteris_paribus.utils import save_observations, save_profiles
+from pyCeterisParibus.ceteris_paribus.plots import PLOTS_DIR
+from pyCeterisParibus.ceteris_paribus.utils import save_observations, save_profiles
 
 app = Flask(__name__, template_folder=PLOTS_DIR)
 
@@ -18,7 +18,7 @@ MAX_PLOTS_PER_SESSION = 10000
 _PLOT_NUMBER = iter(range(MAX_PLOTS_PER_SESSION))
 
 # directory with all files produced in plot generation process
-_DATA_PATH = '_plot_files'
+_DATA_PATH = 'flaskdemo/static/_plot_files'
 os.makedirs(_DATA_PATH, exist_ok=True)
 _D3_engine_filename = 'ceterisParibusD3.js'
 copyfile(os.path.join(PLOTS_DIR, _D3_engine_filename), os.path.join(_DATA_PATH, _D3_engine_filename))
@@ -127,7 +127,7 @@ def plot(cp_profile, *args, destination="browser",
                             size_points=size_points, alpha_points=alpha_points, color_points=color_points,
                             size_residuals=size_residuals, alpha_residuals=alpha_residuals,
                             color_residuals=color_residuals,
-                            yaxis_title=yaxis_title)
+                            yaxis_title=yaxis_title, add_table=print_observations, height=height, width=width)
 
     if aggregate_profiles in {'mean', 'median', None}:
         params['aggregate_profiles'] = aggregate_profiles
@@ -161,6 +161,9 @@ def plot(cp_profile, *args, destination="browser",
         # open plot in a browser
         if sys.platform == "darwin":  # check if on OSX
             plot_path = "file://" + os.path.abspath(plot_path)
+        return plot_path
+        with open(plot_path, 'r') as f:
+            return f.read()
         webbrowser.open(plot_path)
 
 

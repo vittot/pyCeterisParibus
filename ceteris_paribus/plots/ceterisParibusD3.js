@@ -807,11 +807,11 @@
                 if (variables[i]) { // do not plot chart for empty cell
 
                     // cell title
-                    d3.select(this).append('div').style('background-color', '#f6f6f6')
+                    /*d3.select(this).append('div').style('background-color', '#f6f6f6')
                         .attr('class', 'divTableRow titleRow').style('display', 'table-row')
                         .append('div').attr('class', 'divTableCell titleCell').style('display', 'table-cell').style('border', '1px solid #DDDDDD')
                         .style('text-align', 'center').style('font', font_size_titles + 'px sans-serif').text(variables[i])
-
+                    */
                     // cell chart area
                     var chartArea = d3.select(this).append('div').attr('class', 'divTableRow').style('display', 'table-row')
                     //.style('max-height', svgHeight +'px').style('height', svgHeight+'px')
